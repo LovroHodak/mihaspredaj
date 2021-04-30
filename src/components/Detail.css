@@ -1,0 +1,92 @@
+.detail {
+    max-width: 1140px;
+    margin: 122px auto 70px;
+    padding: 0 8px;
+}
+
+.detailTopLeft {
+    width: 80%;
+}
+
+.detailSmall {
+    max-width: 20%;
+}
+
+.detailSmallActive > img {
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid white;
+    transition: ease-in-out 0.3s;
+}
+
+.detailSmallPassive  > img {
+    width: 100%;
+    cursor: pointer;
+    opacity: 0.6;
+    border-radius: 7px;
+}
+
+.detailBig {
+    max-width: 80%;
+}
+
+.detailBig > img {
+    width: 100%;
+    border: 2px solid white;
+}
+
+.detailTopRight {
+    width: 20%;
+}
+
+.detailTopRight > div > button {
+    width: 80%;
+}
+
+.detailBottom > p {
+    font-size: 17px;
+}
+
+@media (max-width: 991px) {
+    .detail {
+        margin-top: 69px;
+    }
+}
+
+@media (max-width: 800px) {
+    .detailTop {
+        flex-direction: column;
+    }
+    .detailTopLeft {
+        width: 100%;
+    }
+    .detailTopRight {
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .detailTopLeft {
+        flex-direction: column-reverse;
+    }
+    .detailBig {
+        max-width: 100%;
+    }
+    .detailSmall {
+        max-width: 100%;
+        display: flex;
+    }
+    .detailTopRight > h1 {
+        font-size: 30px;
+    }
+    .detailBottom > p {
+        font-size: 15px;
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .detail {
+        margin-top: 49px;
+    }
+}

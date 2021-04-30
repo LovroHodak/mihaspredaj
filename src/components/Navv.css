@@ -1,0 +1,34 @@
+.fontTitle {
+    font-size: 40px !important;
+}
+
+.fontCart {
+    font-size: 30px !important;
+}
+
+.fontText {
+    font-size: 20px;
+}
+
+.imageClass {
+    height: 30px;
+    width: 30px;
+}
+
+@media (max-width: 320px) {
+    .fontTitle {
+        font-size: 25px !important;
+    }
+    
+    .fontCart {
+        font-size: 17px !important;
+    }
+    
+    .fontText {
+        font-size: 17px;
+    }
+    .imageClass {
+        height: 17px;
+        width: 17px;
+    }
+}

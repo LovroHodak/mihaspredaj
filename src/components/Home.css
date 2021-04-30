@@ -1,0 +1,17 @@
+.home {
+    max-width: 1140px;
+    margin: 122px auto 70px;
+    padding: 0 8px;
+}
+
+@media (max-width: 991px) {
+    .home {
+        margin-top: 69px;
+    }
+}
+
+@media (max-width: 320px) {
+    .home {
+        margin-top: 49px;
+    }
+}

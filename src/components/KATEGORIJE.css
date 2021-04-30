@@ -1,0 +1,19 @@
+.kategorije {
+    max-width: 1140px;
+    margin: 122px auto 70px;
+    padding: 0 8px;
+}
+
+
+
+@media (max-width: 991px) {
+    .kategorije {
+        margin-top: 69px;
+    }
+}
+
+@media (max-width: 320px) {
+    .kategorije {
+        margin-top: 49px;
+    }
+}

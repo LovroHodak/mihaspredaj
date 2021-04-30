@@ -1,25 +1,85 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useEffect } from "react";
+import { Switch, Route, withRouter } from "react-router-dom";
+import { MyProvider } from "./MyContext";
+import Home from "./components/Home";
+import Navv from "./components/Navv";
+import Footer from "./components/Footer";
+import Cart from "./components/Cart";
+import Kuhinja from "./components/Kuhinja";
+import Vrt from "./components/Vrt";
+import Sport from "./components/Sport";
+import Relax from "./components/Relax";
+import Drugo from "./components/Drugo";
+import Detail from "./components/Detail";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MyProvider>
+      <div className="App">
+        <Navv />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => {
+              return <Home />;
+            }}
+          />
+          <Route
+            exact
+            path="/cart"
+            render={() => {
+              return <Cart />;
+            }}
+          />
+          <Route
+            exact
+            path="/kuhinja"
+            render={() => {
+              return <Kuhinja />;
+            }}
+          />
+          <Route
+            exact
+            path="/vrt"
+            render={() => {
+              return <Vrt />;
+            }}
+          />
+          <Route
+            exact
+            path="/sport"
+            render={() => {
+              return <Sport />;
+            }}
+          />
+          <Route
+            exact
+            path="/drugo"
+            render={() => {
+              return <Drugo />;
+            }}
+          />
+          <Route
+            exact
+            path="/relax"
+            render={() => {
+              return <Relax />;
+            }}
+          />
+          <Route
+            exact
+            path="/detail/:id"
+            render={(routeProps) => {
+              return <Detail {...routeProps} />;
+            }}
+          />
+        </Switch>
+        <Footer />
+      </div>
+    </MyProvider>
   );
 }
 
-export default App;
+export default withRouter(App);
