@@ -62,7 +62,7 @@ export default function Cart() {
                   </Link>
                 </h1>
                 <h2 className="text-center text-black cartItemPrice">
-                  {item.stock} x {item.price} €
+                  {item.nrOfItems} x {item.price} €
                 </h2>
                 <div className="cartItemBtns">
                   {allProducts.map((product, i) => {

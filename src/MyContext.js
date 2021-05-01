@@ -28,7 +28,7 @@ export const MyProvider = (props) => {
       });
 
     axios
-      .get("http://localhost:5000/api/product", { withCredentials: true })
+      .get("http://localhost:5000/api/products", { withCredentials: true })
       .then((response) => {
         setAllProducts(response.data);
         setInitial(response.data);
@@ -77,26 +77,20 @@ export const MyProvider = (props) => {
         if (product._id === item._id && product.stock !== item.stock) {
           cartItems.push({
             _id: product._id,
-            id: product.id,
             name: product.name,
-            category: product.category,
-            shortDesc: product.shortDesc,
-            longDesc: product.longDesc,
             price: product.price,
-            stock: product.stock - item.stock,
-            sold: product.sold,
+            nrOfItems: product.stock - item.stock,
             fotoImg: product.fotoImg,
           });
         }
       });
     });
     setCart(cartItems);
-
     // update nrOfCartItems (NUMBER) (state)
     setNrOfCartItems(nrOfCartItems + 1);
 
     // update Total (state)
-    var sum = cartItems.reduce((sum, p) => sum + p.price * p.stock, 0);
+    var sum = cartItems.reduce((sum, p) => sum + p.price * p.nrOfItems, 0);
 
     setTotal(sum);
   };
@@ -122,14 +116,9 @@ export const MyProvider = (props) => {
         if (product._id === item._id && product.stock !== item.stock) {
           cartItems.push({
             _id: product._id,
-            id: product.id,
             name: product.name,
-            category: product.category,
-            shortDesc: product.shortDesc,
-            longDesc: product.longDesc,
             price: product.price,
-            stock: product.stock - item.stock,
-            sold: product.sold,
+            nrOfItems: product.stock - item.stock,
             fotoImg: product.fotoImg,
           });
         }
@@ -139,10 +128,12 @@ export const MyProvider = (props) => {
 
     setNrOfCartItems(nrOfCartItems - 1);
 
-    var sum = cartItems.reduce((sum, p) => sum + p.price * p.stock, 0);
+    var sum = cartItems.reduce((sum, p) => sum + p.price * p.nrOfItems, 0);
 
     setTotal(sum);
   };
+
+  
 
   return (
     <MyContext.Provider

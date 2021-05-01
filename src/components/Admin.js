@@ -49,7 +49,7 @@ export default function Admin() {
                       <div key={i}>
                         <p className='ejg3'>{product.name} </p>
                         <p>
-                          {product.stock} x {product.price} €
+                          {product.nrOfItems} x {product.price} €
                         </p>
                       </div>
                     );

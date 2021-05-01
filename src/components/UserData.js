@@ -3,6 +3,7 @@ import { MyContext } from "../MyContext";
 import "./UserData.css";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 export default function UserData() {
   let history = useHistory();
@@ -94,7 +95,15 @@ export default function UserData() {
 
     history.push("/successPage");
 
-    console.log("i work");
+    axios
+      .patch(`http://localhost:5000/api/products`, {
+        allProducts,
+        
+      })
+      .then((response) => {
+        setAllProducts(response.data);
+      });
+   
   };
 
   return (

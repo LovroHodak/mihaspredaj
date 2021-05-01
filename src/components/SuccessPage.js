@@ -27,7 +27,6 @@ export default function SuccessPage() {
     setInitial,
   ] = useContext(MyContext);
 
-  console.log(soldHistory);
 
   return (
     <div className="successPage">
