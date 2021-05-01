@@ -1,0 +1,17 @@
+.successPage {
+    max-width: 1140px;
+    margin: 122px auto 70px;
+    padding: 0 8px;
+}
+
+@media (max-width: 991px) {
+    .successPage {
+        margin-top: 69px;
+    }
+}
+
+@media (max-width: 320px) {
+    .successPage {
+        margin-top: 49px;
+    }
+}

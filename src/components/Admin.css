@@ -1,0 +1,37 @@
+.admin {
+    max-width: 1140px;
+    margin: 122px auto 70px;
+    padding: 0 8px;
+}
+
+.purchase {
+    display: flex;
+}
+
+.ejg1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.ejg3 {
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+@media (max-width: 991px) {
+    .admin {
+        margin-top: 69px;
+    }
+}
+
+@media (max-width: 700px) {
+    .purchase {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 320px) {
+    .admin {
+        margin-top: 49px;
+    }
+}

@@ -12,6 +12,9 @@ import Sport from "./components/Sport";
 import Relax from "./components/Relax";
 import Drugo from "./components/Drugo";
 import Detail from "./components/Detail";
+import UserData from "./components/UserData";
+import SuccessPage from "./components/SuccessPage";
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -73,6 +76,27 @@ function App() {
             path="/detail/:id"
             render={(routeProps) => {
               return <Detail {...routeProps} />;
+            }}
+          />
+          <Route
+            exact
+            path="/userData"
+            render={() => {
+              return <UserData />;
+            }}
+          />
+          <Route
+            exact
+            path="/successPage"
+            render={() => {
+              return <SuccessPage />;
+            }}
+          />
+          <Route
+            exact
+            path="/admin"
+            render={() => {
+              return <Admin />;
             }}
           />
         </Switch>

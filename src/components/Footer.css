@@ -1,6 +1,4 @@
 .footer {
-  border: 2px solid yellow;
-
   height: 70px;
   position: absolute;
   bottom: 0;
@@ -10,4 +8,12 @@
   left: 0;
   right: 0;
   text-align: center;
+}
+
+h1 > a:hover,
+a:link,
+a:visited,
+a:active {
+  color: white;
+  text-decoration: none;
 }
