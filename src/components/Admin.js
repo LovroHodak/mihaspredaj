@@ -47,9 +47,9 @@ export default function Admin() {
                   {item.cart.map((product, i) => {
                     return (
                       <div key={i}>
-                        <p className='ejg3'>{product.name} </p>
+                        <p className='ejg3'>{product.namee} </p>
                         <p>
-                          {product.nrOfItems} x {product.price} €
+                          {product.nrOfItemss} x {product.pricee} €
                         </p>
                       </div>
                     );

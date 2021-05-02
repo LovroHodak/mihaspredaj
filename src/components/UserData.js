@@ -37,7 +37,7 @@ export default function UserData() {
   const [city, setCity] = useState("");
 
   const updateEmail = (e) => {
-    if (e.target.value === ''){
+    if (e.target.value === "") {
     }
     setEmail(e.target.value);
   };
@@ -57,19 +57,22 @@ export default function UserData() {
   const buyIt = (e) => {
     e.preventDefault();
 
-    setSoldHistory((prevClients) => [
-      ...prevClients,
-      {
-        name: name,
-        email: email,
-        address: address,
-        city: city,
-        total: total,
-        cart: cart/* .map((item) => {
-          return `Item: ${item.name}, nrOfItems: ${item.stock}, price: ${item.price}€ `;
-        }), */
-      },
-    ]);
+    let newClient = {
+      name: name,
+      email: email,
+      address: address,
+      city: city,
+      total: total,
+      cart: cart.map((item) => {
+        return {
+          namee: item.name,
+          pricee: item.price,
+          nrOfItemss: item.nrOfItems,
+        };
+      }),
+    };
+
+    setSoldHistory((prevClients) => [...prevClients, newClient]);
 
     setEmail("");
     setName("");
@@ -98,18 +101,22 @@ export default function UserData() {
     axios
       .patch(`http://localhost:5000/api/products`, {
         allProducts,
-        
       })
       .then((response) => {
         setAllProducts(response.data);
       });
-   
+
+
+    axios
+      .post(`http://localhost:5000/api/newOrder`, newClient)
+      .then((response) => {
+      });
   };
 
   return (
     <div className="userData">
-      <Form onSubmit={buyIt} className='p-1'>
-        <Form.Group controlId="formBasicName" className='p-1'>
+      <Form onSubmit={buyIt} className="p-1">
+        <Form.Group controlId="formBasicName" className="p-1">
           <Form.Control
             onChange={updateName}
             type="text"
@@ -119,7 +126,7 @@ export default function UserData() {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formBasicEmail"  className='p-1'>
+        <Form.Group controlId="formBasicEmail" className="p-1">
           <Form.Control
             onChange={updateEmail}
             type="email"
@@ -129,7 +136,7 @@ export default function UserData() {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formBasicName"  className='p-1'>
+        <Form.Group controlId="formBasicName" className="p-1">
           <Form.Control
             onChange={updateAddress}
             type="text"
@@ -139,7 +146,7 @@ export default function UserData() {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formBasicEmail"  className='p-1'>
+        <Form.Group controlId="formBasicEmail" className="p-1">
           <Form.Control
             onChange={updateCity}
             type="text"
@@ -149,11 +156,11 @@ export default function UserData() {
             required
           />
         </Form.Group>
-        <Form.Group  controlId="formBasicCheckbox"  className='p-1'>
-          <Form.Check required   type="checkbox" label="Placilo po povzetju"  />
-          <Form.Check  disabled type="checkbox" label="Placilo z kartico" />
+        <Form.Group controlId="formBasicCheckbox" className="p-1">
+          <Form.Check required type="checkbox" label="Placilo po povzetju" />
+          <Form.Check disabled type="checkbox" label="Placilo z kartico" />
         </Form.Group>
-        <Button variant="success m-1" type="submit" style={{width: 150}}>
+        <Button variant="success m-1" type="submit" style={{ width: 150 }}>
           Submit
         </Button>
       </Form>

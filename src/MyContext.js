@@ -52,6 +52,15 @@ export const MyProvider = (props) => {
       .catch((err) => {
         console.log("this is error: ", err);
       });
+
+      axios
+      .get("http://localhost:5000/api/orders", { withCredentials: true })
+      .then((response) => {
+        setSoldHistory(response.data);
+      })
+      .catch((err) => {
+        console.log("this is error: ", err);
+      });
   }, []);
 
   const addToCart = (_id) => {
