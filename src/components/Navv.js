@@ -51,7 +51,7 @@ export default function Navv() {
         className="d-flex justify-content-end align-items-center w-25 m-0 pr-2 pl-0"
       >
         <Image
-          src="https://www.flaticon.com/svg/vstatic/svg/711/711897.svg?token=exp=1619357439~hmac=a185bd10db7c9f899fde24c60ee98943"
+          src="https://www.flaticon.com/svg/vstatic/svg/1170/1170678.svg?token=exp=1620035862~hmac=c134dfe427174161081dd31161d70b90"
           alt="cartIcon"
           className="imageClass"
         />

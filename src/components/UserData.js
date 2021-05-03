@@ -4,8 +4,15 @@ import "./UserData.css";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
 export default function UserData() {
+  const promise = loadStripe(
+    "pk_test_51Hj18ZKqS56uvZe83wuhJjH6JFhxzj139IXZQAFhBT3NNzhJir4vntXcjEOha7Gw4JK6QQzD2Y2BEI4CFycD3LoW00GYaFr3so"
+  );
+
   let history = useHistory();
 
   const [
@@ -35,6 +42,9 @@ export default function UserData() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
+
+  const [afterDelivery, setAfterDelivery] = useState(false)
+
 
   const updateEmail = (e) => {
     if (e.target.value === "") {
@@ -78,39 +88,51 @@ export default function UserData() {
     setName("");
     setAddress("");
     setCity("");
-    setCart([]);
-    setNrOfCartItems(0);
-    setInitial(allProducts);
-    setBS2(
-      allProducts
-        .sort((a, b) => {
-          return b.sold - a.sold;
-        })
-        .slice(3, 5)
-    );
-    setBS3(
-      allProducts
-        .sort((a, b) => {
-          return b.sold - a.sold;
-        })
-        .slice(0, 3)
-    );
 
-    history.push("/successPage");
 
-    axios
+
+    // IF YOU PICK PAY AT DELIVERY
+    if (afterDelivery === true) {
+      setCart([]);
+      setNrOfCartItems(0);
+      setInitial(allProducts);
+      setBS2(
+        allProducts
+          .sort((a, b) => {
+            return b.sold - a.sold;
+          })
+          .slice(3, 5)
+      );
+      setBS3(
+        allProducts
+          .sort((a, b) => {
+            return b.sold - a.sold;
+          })
+          .slice(0, 3)
+      );
+  
+      history.push("/successPage");
+
+      axios
       .patch(`http://localhost:5000/api/products`, {
         allProducts,
+        
       })
       .then((response) => {
         setAllProducts(response.data);
+        console.log('afterDelivery')
       });
-
 
     axios
       .post(`http://localhost:5000/api/newOrder`, newClient)
       .then((response) => {
+        console.log(response)
       });
+    } else {
+      console.log('withCard')
+      history.push("/cardComponent");
+    }
+
   };
 
   return (
@@ -157,13 +179,32 @@ export default function UserData() {
           />
         </Form.Group>
         <Form.Group controlId="formBasicCheckbox" className="p-1">
-          <Form.Check required type="checkbox" label="Placilo po povzetju" />
-          <Form.Check disabled type="checkbox" label="Placilo z kartico" />
+          <Form.Check
+            type="radio"
+            class="form-check-input"
+            id="validationFormCheck2"
+            name="radio-stacked"
+            required
+            label="Placilo po povzetju"
+            onClick={() => setAfterDelivery(true)}
+          />
+          <Form.Check
+            type="radio"
+            class="form-check-input"
+            id="validationFormCheck3"
+            name="radio-stacked"
+            required
+            label="Placilo z kartico"
+          />
         </Form.Group>
-        <Button variant="success m-1" type="submit" style={{ width: 150 }}>
-          Submit
-        </Button>
+          <Button variant="success m-1" type="submit" style={{ width: 150 }}>
+            Submit
+          </Button>
       </Form>
+
+{/*       <Elements stripe={promise}>
+            <CheckoutForm items={99} />
+          </Elements> */}
     </div>
   );
 }

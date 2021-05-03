@@ -15,6 +15,7 @@ import Detail from "./components/Detail";
 import UserData from "./components/UserData";
 import SuccessPage from "./components/SuccessPage";
 import Admin from "./components/Admin";
+import CardComponent from "./components/CardComponent";
 
 function App() {
   return (
@@ -97,6 +98,13 @@ function App() {
             path="/admin"
             render={() => {
               return <Admin />;
+            }}
+          />
+                    <Route
+            exact
+            path="/cardComponent"
+            render={() => {
+              return <CardComponent />;
             }}
           />
         </Switch>

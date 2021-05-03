@@ -17,6 +17,8 @@ export const MyProvider = (props) => {
 
   const [soldHistory, setSoldHistory] = useState([])
 
+  
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/category", { withCredentials: true })
@@ -142,6 +144,14 @@ export const MyProvider = (props) => {
     setTotal(sum);
   };
 
+
+
+console.log(soldHistory[soldHistory.length - 1])
+
+
+
+
+  
   
 
   return (
