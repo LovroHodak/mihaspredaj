@@ -146,14 +146,6 @@ export const MyProvider = (props) => {
 
 
 
-console.log(soldHistory[soldHistory.length - 1])
-
-
-
-
-  
-  
-
   return (
     <MyContext.Provider
       value={[

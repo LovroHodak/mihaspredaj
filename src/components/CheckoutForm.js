@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { MyContext } from "../MyContext";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({items}) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -19,6 +19,7 @@ export default function CheckoutForm() {
   const [clientSecret, setClientSecret] = useState('');
   const stripe = useStripe();
   const elements = useElements();
+
 
   // MINE
   const [
@@ -46,6 +47,8 @@ export default function CheckoutForm() {
 
   let history = useHistory();
 
+  console.log(cart)
+
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
@@ -54,7 +57,7 @@ export default function CheckoutForm() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+        body: JSON.stringify({items})
       })
       .then(res => {
         return res.json();
