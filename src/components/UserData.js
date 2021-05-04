@@ -125,8 +125,17 @@ export default function UserData() {
 
     axios
       .post(`http://localhost:5000/api/newOrder`, newClient)
-      .then((response) => {
-        console.log(response)
+      .then(() => {
+        axios
+          .post(
+            `http://localhost:5000/api/send-email`,
+            newClient,
+
+            { withCredentials: true }
+          )
+          .then(() => {
+            console.log("send mail");
+          });
       });
     } else {
       console.log('withCard')
@@ -195,6 +204,7 @@ export default function UserData() {
             name="radio-stacked"
             required
             label="Placilo z kartico"
+            onClick={() => setAfterDelivery(false)}
           />
         </Form.Group>
           <Button variant="success m-1" type="submit" style={{ width: 150 }}>
