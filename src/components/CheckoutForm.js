@@ -117,8 +117,17 @@ export default function CheckoutForm({items}) {
 
     axios
       .post(`http://localhost:5000/api/newOrder`, soldHistory[soldHistory.length - 1])
-      .then((response) => {
-        console.log(response)
+      .then(() => {
+        axios
+        .post(
+          `http://localhost:5000/api/send-email`,
+          soldHistory[soldHistory.length - 1],
+
+          { withCredentials: true }
+        )
+        .then(() => {
+          console.log("send mail");
+        });
       });
       setCart([]);
       setNrOfCartItems(0);
