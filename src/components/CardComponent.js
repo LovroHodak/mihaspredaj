@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
@@ -36,6 +36,11 @@ export default function CardComponent() {
 
   return (
     <div className="cardComponent">
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <h3>For testing purposes use this code: </h3>
+        <p><b className="text-success">Success:</b> 4242 4242 4242 4242 - 04 / 24 - 242 - 42424</p>
+      </div>
+
       <Elements stripe={promise}>
         <CheckoutForm items={cart} />
       </Elements>
