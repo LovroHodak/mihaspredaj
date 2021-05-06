@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./Detail.css";
 import { MyContext } from "../MyContext";
 import { Button, Image } from "react-bootstrap";
@@ -72,9 +72,7 @@ export default function Detail({ match }) {
           return (
             <div key={i}>
               <div className="detailTop d-flex justify-content-between mb-2">
-                <div
-                  className="detailTopLeft d-flex justify-content-between mt-2"
-                >
+                <div className="detailTopLeft d-flex justify-content-between mt-2">
                   <div className="detailSmall">
                     {product.fotoImg.map((foto, i) => {
                       if (foto.active === true) {
@@ -104,13 +102,7 @@ export default function Detail({ match }) {
                   <div className="detailBig m-1">
                     {product.fotoImg.map((foto, i) => {
                       if (foto.active === true) {
-                        return (
-                          <Image
-                            key={i}
-                            src={foto.lnk}
-                            alt="bigFoto"
-                          />
-                        );
+                        return <Image key={i} src={foto.lnk} alt="bigFoto" />;
                       }
                     })}
                   </div>

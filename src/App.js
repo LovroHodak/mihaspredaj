@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { MyProvider } from "./MyContext";
 import Home from "./components/Home";
@@ -100,7 +100,7 @@ function App() {
               return <Admin />;
             }}
           />
-                    <Route
+          <Route
             exact
             path="/cardComponent"
             render={() => {

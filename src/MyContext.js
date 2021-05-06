@@ -1,27 +1,33 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "axios";
+import {API_URL} from './config'
+
 export const MyContext = createContext();
 
-export const MyProvider = (props) => {
-  const [sliderInfo, setSliderInfo] = useState([]);
 
+
+export const MyProvider = (props) => {
+  // SLIDER IMAGES (HOME)
+  const [sliderInfo, setSliderInfo] = useState([]);
+  // 2x PRODUCTS
   const [allProducts, setAllProducts] = useState([]);
   const [initial, setInitial] = useState([]);
+  // CART
   const [cart, setCart] = useState([]);
-
+  // 2x + 3x BESTSELLER (HOME)
   const [BS2, setBS2] = useState([]);
   const [BS3, setBS3] = useState([]);
-
+  // NAVBAR NUMBER
   const [nrOfCartItems, setNrOfCartItems] = useState(0);
   const [total, setTotal] = useState(0);
-
+  // ADMIN
   const [soldHistory, setSoldHistory] = useState([])
 
   
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/category", { withCredentials: true })
+      .get(`${API_URL}/api/category`, { withCredentials: true })
       .then((response) => {
         setSliderInfo(response.data);
       })
@@ -30,7 +36,7 @@ export const MyProvider = (props) => {
       });
 
     axios
-      .get("http://localhost:5000/api/products", { withCredentials: true })
+      .get(`${API_URL}/api/products`, { withCredentials: true })
       .then((response) => {
         setAllProducts(response.data);
         setInitial(response.data);
@@ -56,7 +62,7 @@ export const MyProvider = (props) => {
       });
 
       axios
-      .get("http://localhost:5000/api/orders", { withCredentials: true })
+      .get(`${API_URL}/api/orders`, { withCredentials: true })
       .then((response) => {
         setSoldHistory(response.data);
       })

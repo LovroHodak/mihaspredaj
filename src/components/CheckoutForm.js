@@ -1,25 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  CardElement,
-  useStripe,
-  useElements
-} from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 // MINE
-import './CheckoutForm.css'
+import "./CheckoutForm.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { MyContext } from "../MyContext";
+import {API_URL} from '../config'
 
-export default function CheckoutForm({items}) {
+export default function CheckoutForm({ items }) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState('');
+  const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
-
 
   // MINE
   const [
@@ -47,22 +43,20 @@ export default function CheckoutForm({items}) {
 
   let history = useHistory();
 
-  console.log(cart)
-
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
-      .fetch("http://localhost:5000/api/create-payment-intent", {
+      .fetch(`${API_URL}/api/create-payment-intent`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({items})
+        body: JSON.stringify({ items }),
       })
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         setClientSecret(data.clientSecret);
       });
   }, []);
@@ -70,18 +64,18 @@ export default function CheckoutForm({items}) {
     style: {
       base: {
         color: "#32325d",
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: "Arial, sans-serif",
         fontSmoothing: "antialiased",
         fontSize: "16px",
         "::placeholder": {
-          color: "#32325d"
-        }
+          color: "#32325d",
+        },
       },
       invalid: {
         color: "#fa755a",
-        iconColor: "#fa755a"
-      }
-    }
+        iconColor: "#fa755a",
+      },
+    },
   };
   const handleChange = async (event) => {
     // Listen for changes in the CardElement
@@ -89,13 +83,13 @@ export default function CheckoutForm({items}) {
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };
-  const handleSubmit = async ev => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement)
-      }
+        card: elements.getElement(CardElement),
+      },
     });
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
@@ -106,29 +100,32 @@ export default function CheckoutForm({items}) {
       setSucceeded(true);
 
       axios
-      .patch(`http://localhost:5000/api/products`, {
-        allProducts,
-        
-      })
-      .then((response) => {
-        setAllProducts(response.data);
-        console.log('afterDelivery')
-      });
+        .patch(`${API_URL}/api/products`, {
+          allProducts,
+        })
+        .then((response) => {
+          setAllProducts(response.data);
+          console.log("Card payment");
+        });
 
-    axios
-      .post(`http://localhost:5000/api/newOrder`, soldHistory[soldHistory.length - 1])
-      .then(() => {
-        axios
+      axios
         .post(
-          `http://localhost:5000/api/send-email`,
-          soldHistory[soldHistory.length - 1],
-
-          { withCredentials: true }
+          `${API_URL}/api/newOrder`,
+          soldHistory[soldHistory.length - 1]
         )
         .then(() => {
-          console.log("send mail");
+          axios
+            .post(
+              `${API_URL}/api/send-email`,
+              soldHistory[soldHistory.length - 1],
+
+              { withCredentials: true }
+            )
+            .then(() => {
+              console.log("send mail");
+            })
+            .catch((error) => console.log('Mail sent but error: ', error));
         });
-      });
       setCart([]);
       setNrOfCartItems(0);
       setInitial(allProducts);
@@ -146,24 +143,24 @@ export default function CheckoutForm({items}) {
           })
           .slice(0, 3)
       );
-  
+
       history.push("/successPage");
     }
   };
   return (
-    <form className='stripeForm' id="payment-form" onSubmit={handleSubmit}>
-      <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
+    <form className="stripeForm" id="payment-form" onSubmit={handleSubmit}>
+      <CardElement
+        id="card-element"
+        options={cardStyle}
+        onChange={handleChange}
+      />
       <button
-      className='buttonStripe'
+        className="buttonStripe"
         disabled={processing || disabled || succeeded}
         id="submit"
       >
         <span id="button-text">
-          {processing ? (
-            <div className="spinner" id="spinner"></div>
-          ) : (
-            "Pay"
-          )}
+          {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
         </span>
       </button>
       {/* Show any error that happens when processing the payment */}

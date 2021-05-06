@@ -22,13 +22,13 @@ export default function BestSeller() {
       <div className="p-0 d-md-flex justify-content-between ">
         {BS3.map((item) => {
           return (
-            <Card key={item.id} className='mx-1 my-1'>
+            <Card key={item.id} className="mx-1 my-1">
               <Card.Img
                 variant="top p-1"
                 src={item.fotoImg[0].lnk}
                 alt={item.name}
               />
-              <Card.Body className='d-flex flex-column align-items-center'>
+              <Card.Body className="d-flex flex-column align-items-center">
                 <Card.Title>{item.name}</Card.Title>
                 <Button variant="primary" as={Link} to={`/detail/${item._id}`}>
                   Go somewhere
@@ -41,13 +41,13 @@ export default function BestSeller() {
       <div className="p-0 d-md-flex justify-content-between">
         {BS2.map((item) => {
           return (
-            <Card key={item.id} className='mx-1 my-1'>
+            <Card key={item.id} className="mx-1 my-1">
               <Card.Img
                 variant="top p-1"
                 src={item.fotoImg[0].lnk}
                 alt={item.name}
               />
-              <Card.Body className='d-flex flex-column align-items-center'>
+              <Card.Body className="d-flex flex-column align-items-center">
                 <Card.Title>{item.name}</Card.Title>
                 <Button variant="primary" as={Link} to={`/detail/${item._id}`}>
                   Go somewhere

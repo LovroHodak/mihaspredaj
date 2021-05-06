@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./Navv.css";
 import { Navbar, Nav, Image, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -51,11 +51,13 @@ export default function Navv() {
         className="d-flex justify-content-end align-items-center w-25 m-0 pr-2 pl-0"
       >
         <Image
-          src="https://www.flaticon.com/svg/vstatic/svg/1170/1170678.svg?token=exp=1620035862~hmac=c134dfe427174161081dd31161d70b90"
+          src="https://image.flaticon.com/icons/png/128/2211/2211008.png"
           alt="cartIcon"
           className="imageClass"
         />
-        <Navbar.Text className="text-white pl-1 fontCart">{nrOfCartItems}</Navbar.Text>
+        <Navbar.Text className="text-white pl-1 fontCart">
+          {nrOfCartItems}
+        </Navbar.Text>
       </Navbar.Brand>
 
       <Navbar.Collapse id="basic-navbar-nav ">

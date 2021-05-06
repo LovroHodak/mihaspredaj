@@ -27,11 +27,10 @@ export default function SuccessPage() {
     setInitial,
   ] = useContext(MyContext);
 
-
   return (
     <div className="successPage">
       {soldHistory.length > 0 ? (
-        <div className='d-flex flex-column justify-content-center align-items-center text-white'>
+        <div className="d-flex flex-column justify-content-center align-items-center text-white">
           <h1>
             Thank you {soldHistory[soldHistory.length - 1].name.toUpperCase()}{" "}
             for your order!
@@ -42,10 +41,10 @@ export default function SuccessPage() {
           />
         </div>
       ) : (
-        <div className='d-flex flex-column justify-content-center align-items-center text-white'>
+        <div className="d-flex flex-column justify-content-center align-items-center text-white">
           <h1>This is not the page you are looking for!</h1>
           <img
-          style={{maxWidth: 600}}
+            style={{ maxWidth: 600 }}
             alt="lostImg"
             src="https://www.finfunmermaid.com/media/wysiwyg/fun-transition-page-graphics/ff-no-results-binoculars.svg"
           />

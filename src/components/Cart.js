@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "./Cart.css";
 import { MyContext } from "../MyContext";
-import { Button, Jumbotron, Modal, Form } from "react-bootstrap";
+import { Button, Jumbotron } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
@@ -92,12 +92,15 @@ export default function Cart() {
             );
           })}
           <Jumbotron>
-            <h1 className='text-center d-flex flex-column align-items-center'>Total: <span style={{display: 'flex', color: 'red'}}> {total} €</span></h1>
-            <p className='text-center'>
+            <h1 className="text-center d-flex flex-column align-items-center">
+              Total:{" "}
+              <span style={{ display: "flex", color: "red" }}> {total} €</span>
+            </h1>
+            <p className="text-center">
               This is a simple hero unit, a simple jumbotron-style component for
               calling extra attention to featured content or information.
             </p>
-            <p  className='text-center'>
+            <p className="text-center">
               <Button as={Link} to="/userData" variant="primary">
                 Confirm
               </Button>

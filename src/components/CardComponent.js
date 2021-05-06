@@ -36,9 +36,17 @@ export default function CardComponent() {
 
   return (
     <div className="cardComponent">
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <h3>For testing purposes use this code: </h3>
-        <p><b className="text-success">Success:</b> 4242 4242 4242 4242 - 04 / 24 - 242 - 42424</p>
+        <p>4242 4242 4242 4242 - 04 / 24
+          - 242 - 42424
+        </p>
       </div>
 
       <Elements stripe={promise}>

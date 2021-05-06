@@ -4,15 +4,9 @@ import "./UserData.css";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
+import {API_URL} from '../config'
 
 export default function UserData() {
-  const promise = loadStripe(
-    "pk_test_51Hj18ZKqS56uvZe83wuhJjH6JFhxzj139IXZQAFhBT3NNzhJir4vntXcjEOha7Gw4JK6QQzD2Y2BEI4CFycD3LoW00GYaFr3so"
-  );
-
   let history = useHistory();
 
   const [
@@ -43,9 +37,7 @@ export default function UserData() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
 
-  const [afterDelivery, setAfterDelivery] = useState(false)
-
-
+  const [afterDelivery, setAfterDelivery] = useState(false);
   const updateEmail = (e) => {
     if (e.target.value === "") {
     }
@@ -64,6 +56,17 @@ export default function UserData() {
     setCity(e.target.value);
   };
 
+  
+  const payment = () => {
+    let cash = 'Cash - after delivery'
+    let CC = 'Credit Card'
+    if (afterDelivery === true) {
+      return cash
+    } else {
+      return CC
+    }
+  }
+
   const buyIt = (e) => {
     e.preventDefault();
 
@@ -73,6 +76,7 @@ export default function UserData() {
       address: address,
       city: city,
       total: total,
+      payment: payment(),
       cart: cart.map((item) => {
         return {
           namee: item.name,
@@ -88,8 +92,6 @@ export default function UserData() {
     setName("");
     setAddress("");
     setCity("");
-
-
 
     // IF YOU PICK PAY AT DELIVERY
     if (afterDelivery === true) {
@@ -110,38 +112,36 @@ export default function UserData() {
           })
           .slice(0, 3)
       );
-  
+
       history.push("/successPage");
 
       axios
-      .patch(`http://localhost:5000/api/products`, {
-        allProducts,
-        
-      })
-      .then((response) => {
-        setAllProducts(response.data);
-        console.log('afterDelivery')
-      });
+        .patch(`${API_URL}/api/products`, {
+          allProducts,
+        })
+        .then((response) => {
+          setAllProducts(response.data);
+          console.log("afterDelivery");
+        });
 
-    axios
-      .post(`http://localhost:5000/api/newOrder`, newClient)
-      .then(() => {
+      axios.post(`${API_URL}/api/newOrder`, newClient).then(() => {
         axios
           .post(
-            `http://localhost:5000/api/send-email`,
+            `${API_URL}/api/send-email`,
             newClient,
 
             { withCredentials: true }
           )
           .then(() => {
             console.log("send mail");
-          });
+          })
+          .catch((error) => console.log('Mail sent but error: ', error));
+          
       });
     } else {
-      console.log('withCard')
+      console.log("withCard");
       history.push("/cardComponent");
     }
-
   };
 
   return (
@@ -207,14 +207,10 @@ export default function UserData() {
             onClick={() => setAfterDelivery(false)}
           />
         </Form.Group>
-          <Button variant="success m-1" type="submit" style={{ width: 150 }}>
-            Submit
-          </Button>
+        <Button variant="success m-1" type="submit" style={{ width: 150 }}>
+          Submit
+        </Button>
       </Form>
-
-{/*       <Elements stripe={promise}>
-            <CheckoutForm items={99} />
-          </Elements> */}
     </div>
   );
 }
