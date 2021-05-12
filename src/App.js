@@ -16,6 +16,7 @@ import UserData from "./components/UserData";
 import SuccessPage from "./components/SuccessPage";
 import Admin from "./components/Admin";
 import CardComponent from "./components/CardComponent";
+import TermsConditions from "./components/TermsConditions";
 
 function App() {
   return (
@@ -105,6 +106,13 @@ function App() {
             path="/cardComponent"
             render={() => {
               return <CardComponent />;
+            }}
+          />
+                    <Route
+            exact
+            path="/termsConditions"
+            render={() => {
+              return <TermsConditions />;
             }}
           />
         </Switch>
