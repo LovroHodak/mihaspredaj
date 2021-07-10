@@ -30,6 +30,7 @@ export const MyProvider = (props) => {
       .get(`${API_URL}/api/category`, { withCredentials: true })
       .then((response) => {
         setSliderInfo(response.data);
+        console.log('mycontext load')
       })
       .catch((err) => {
         console.log("this is error: ", err);

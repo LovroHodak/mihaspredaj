@@ -39,8 +39,8 @@ export default function UserData() {
 
   const [afterDelivery, setAfterDelivery] = useState(false);
   const updateEmail = (e) => {
-    if (e.target.value === "") {
-    }
+    /* if (e.target.value === "") {
+    } */
     setEmail(e.target.value);
   };
 

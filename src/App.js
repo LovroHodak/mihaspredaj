@@ -18,19 +18,25 @@ import Admin from "./components/Admin";
 import CardComponent from "./components/CardComponent";
 import TermsConditions from "./components/TermsConditions";
 
+import { CategoriesProvider } from "./hooks/use-categories";
+
 function App() {
   return (
     <MyProvider>
       <div className="App">
         <Navv />
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return <Home />;
-            }}
-          />
+        
+          <CategoriesProvider>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return <Home />;
+              }}
+            />
+          </CategoriesProvider>
+
           <Route
             exact
             path="/cart"
@@ -108,7 +114,7 @@ function App() {
               return <CardComponent />;
             }}
           />
-                    <Route
+          <Route
             exact
             path="/termsConditions"
             render={() => {
