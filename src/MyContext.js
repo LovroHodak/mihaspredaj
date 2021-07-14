@@ -4,7 +4,7 @@ import {API_URL} from './config'
 
 export const MyContext = createContext();
 
-
+console.log('myContext outside function')
 
 export const MyProvider = (props) => {
   // SLIDER IMAGES (HOME)
@@ -30,7 +30,7 @@ export const MyProvider = (props) => {
       .get(`${API_URL}/api/category`, { withCredentials: true })
       .then((response) => {
         setSliderInfo(response.data);
-        console.log('mycontext load')
+        console.log('mycontext category load')
       })
       .catch((err) => {
         console.log("this is error: ", err);
@@ -41,6 +41,7 @@ export const MyProvider = (props) => {
       .then((response) => {
         setAllProducts(response.data);
         setInitial(response.data);
+        console.log('mycontext products load')
 
         setBS3(
           response.data

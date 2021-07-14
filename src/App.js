@@ -20,14 +20,15 @@ import TermsConditions from "./components/TermsConditions";
 
 import { CategoriesProvider } from "./hooks/use-categories";
 
+console.log('app outside function')
+
 function App() {
   return (
     <MyProvider>
-      <div className="App">
-        <Navv />
-        <Switch>
-        
-          <CategoriesProvider>
+      <CategoriesProvider>
+        <div className="App">
+          <Navv />
+          <Switch>
             <Route
               exact
               path="/"
@@ -35,95 +36,95 @@ function App() {
                 return <Home />;
               }}
             />
-          </CategoriesProvider>
 
-          <Route
-            exact
-            path="/cart"
-            render={() => {
-              return <Cart />;
-            }}
-          />
-          <Route
-            exact
-            path="/kuhinja"
-            render={() => {
-              return <Kuhinja />;
-            }}
-          />
-          <Route
-            exact
-            path="/vrt"
-            render={() => {
-              return <Vrt />;
-            }}
-          />
-          <Route
-            exact
-            path="/sport"
-            render={() => {
-              return <Sport />;
-            }}
-          />
-          <Route
-            exact
-            path="/drugo"
-            render={() => {
-              return <Drugo />;
-            }}
-          />
-          <Route
-            exact
-            path="/relax"
-            render={() => {
-              return <Relax />;
-            }}
-          />
-          <Route
-            exact
-            path="/detail/:id"
-            render={(routeProps) => {
-              return <Detail {...routeProps} />;
-            }}
-          />
-          <Route
-            exact
-            path="/userData"
-            render={() => {
-              return <UserData />;
-            }}
-          />
-          <Route
-            exact
-            path="/successPage"
-            render={() => {
-              return <SuccessPage />;
-            }}
-          />
-          <Route
-            exact
-            path="/admin"
-            render={() => {
-              return <Admin />;
-            }}
-          />
-          <Route
-            exact
-            path="/cardComponent"
-            render={() => {
-              return <CardComponent />;
-            }}
-          />
-          <Route
-            exact
-            path="/termsConditions"
-            render={() => {
-              return <TermsConditions />;
-            }}
-          />
-        </Switch>
-        <Footer />
-      </div>
+            <Route
+              exact
+              path="/cart"
+              render={() => {
+                return <Cart />;
+              }}
+            />
+            <Route
+              exact
+              path="/kuhinja"
+              render={() => {
+                return <Kuhinja />;
+              }}
+            />
+            <Route
+              exact
+              path="/vrt"
+              render={() => {
+                return <Vrt />;
+              }}
+            />
+            <Route
+              exact
+              path="/sport"
+              render={() => {
+                return <Sport />;
+              }}
+            />
+            <Route
+              exact
+              path="/drugo"
+              render={() => {
+                return <Drugo />;
+              }}
+            />
+            <Route
+              exact
+              path="/relax"
+              render={() => {
+                return <Relax />;
+              }}
+            />
+            <Route
+              exact
+              path="/detail/:id"
+              render={(routeProps) => {
+                return <Detail {...routeProps} />;
+              }}
+            />
+            <Route
+              exact
+              path="/userData"
+              render={() => {
+                return <UserData />;
+              }}
+            />
+            <Route
+              exact
+              path="/successPage"
+              render={() => {
+                return <SuccessPage />;
+              }}
+            />
+            <Route
+              exact
+              path="/admin"
+              render={() => {
+                return <Admin />;
+              }}
+            />
+            <Route
+              exact
+              path="/cardComponent"
+              render={() => {
+                return <CardComponent />;
+              }}
+            />
+            <Route
+              exact
+              path="/termsConditions"
+              render={() => {
+                return <TermsConditions />;
+              }}
+            />
+          </Switch>
+          <Footer />
+        </div>
+      </CategoriesProvider>
     </MyProvider>
   );
 }

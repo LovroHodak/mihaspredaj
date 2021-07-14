@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 //import { MyContext } from "../MyContext";
 
-import { Carousel } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
 
 import { useCategories } from "../hooks/use-categories";
+
+
+console.log('slider outside function')
 
 export default function Slider() {
   //const [sliderInfo, setSliderInfo] = useContext(MyContext);
@@ -12,11 +15,12 @@ export default function Slider() {
 
   console.log(categories);
   console.log(loading);
+  
 
   return (
     <div>
       {categories === undefined ? (
-        <h1>Loading</h1>
+        <Spinner  animation="grow" />
       ) : (
         <Carousel className="d-none d-md-block">
           {categories.map((item, i) => {

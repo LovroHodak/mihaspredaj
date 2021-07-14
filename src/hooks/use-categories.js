@@ -16,7 +16,7 @@ export function CategoriesProvider (props) {
       .then((response) => {
       setLoading(false)
       setCategories(response.data);
-      console.log(response.data)
+      console.log('useCategories categories load', response.data)
       })
       .catch((err) => {
       setLoading(false)
