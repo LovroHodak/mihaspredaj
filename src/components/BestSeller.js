@@ -5,8 +5,6 @@ import { Card, Button, Container } from "react-bootstrap";
 
 export default function BestSeller() {
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

@@ -6,8 +6,6 @@ import { MyContext } from "../MyContext";
 
 export default function Navv() {
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

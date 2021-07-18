@@ -5,7 +5,7 @@ import { MyContext } from "../MyContext";
 import { Link } from "react-router-dom";
 
 export default function Sport() {
-  const [sliderInfo, setSliderInfo, allProducts, setAllProducts] = useContext(
+  const [allProducts, setAllProducts] = useContext(
     MyContext
   );
 

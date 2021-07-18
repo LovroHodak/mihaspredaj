@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 
 export default function Cart() {
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

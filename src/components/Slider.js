@@ -1,24 +1,13 @@
-import React, { useContext } from "react";
-//import { MyContext } from "../MyContext";
-
+import React from "react";
 import { Carousel, Spinner } from "react-bootstrap";
-
 import { useCategories } from "../hooks/use-categories";
 
-console.log("slider outside function");
-
 export default function Slider() {
-  //const [sliderInfo, setSliderInfo] = useContext(MyContext);
-
-
-  
   const { categories, loading, error } = useCategories();
-  console.log(error);
-  console.log(categories);
-  console.log(loading);
 
   if (loading) return <Spinner animation="grow" />;
   if (error) return <code>{error}</code>;
+  
   return (
     <div>
       <Carousel className="d-none d-md-block">

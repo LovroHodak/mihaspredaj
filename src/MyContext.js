@@ -7,8 +7,6 @@ export const MyContext = createContext();
 console.log('myContext outside function')
 
 export const MyProvider = (props) => {
-  // SLIDER IMAGES (HOME)
-  const [sliderInfo, setSliderInfo] = useState([]);
   // 2x PRODUCTS
   const [allProducts, setAllProducts] = useState([]);
   const [initial, setInitial] = useState([]);
@@ -26,16 +24,6 @@ export const MyProvider = (props) => {
   
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/api/category`, { withCredentials: true })
-      .then((response) => {
-        setSliderInfo(response.data);
-        console.log('mycontext category load')
-      })
-      .catch((err) => {
-        console.log("this is error: ", err);
-      });
-
     axios
       .get(`${API_URL}/api/products`, { withCredentials: true })
       .then((response) => {
@@ -157,7 +145,6 @@ export const MyProvider = (props) => {
   return (
     <MyContext.Provider
       value={[
-        sliderInfo, setSliderInfo,
         allProducts, setAllProducts,
         BS2, setBS2,
         BS3, setBS3,

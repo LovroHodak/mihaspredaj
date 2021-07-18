@@ -11,8 +11,6 @@ export default function UserData() {
 
   // Context
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

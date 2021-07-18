@@ -12,8 +12,6 @@ export default function CardComponent() {
   );
 
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

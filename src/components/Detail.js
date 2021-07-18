@@ -5,8 +5,6 @@ import { Button, Image } from "react-bootstrap";
 
 export default function Detail({ match }) {
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

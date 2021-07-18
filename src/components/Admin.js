@@ -4,8 +4,6 @@ import "./Admin.css";
 
 export default function Admin() {
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

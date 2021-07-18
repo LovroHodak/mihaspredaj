@@ -19,8 +19,6 @@ export default function CheckoutForm({ items }) {
 
   // MINE
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,

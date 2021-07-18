@@ -5,8 +5,6 @@ import { Image } from "react-bootstrap";
 
 export default function SuccessPage() {
   const [
-    sliderInfo,
-    setSliderInfo,
     allProducts,
     setAllProducts,
     BS2,
