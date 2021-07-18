@@ -2,44 +2,43 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 import axios from "axios";
 import { API_URL } from "../config";
 
-const CategoriesContext = createContext();
 
-export function CategoriesProvider(props) {
-  const [categories, setCategories] = useState();
+const OrdersContext = createContext();
+
+export function OrdersProvider(props) {
+  const [orders, setOrders] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
+
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${API_URL}/api/category`, { withCredentials: true })
+      .get(`${API_URL}/api/orders`, { withCredentials: true })
       .then((response) => {
-        setCategories(response.data);
+        setOrders(response.data);
         setLoading(false);
-        console.log(response.data)
       })
       .catch((err) => {
         setError(err.message);
         setLoading(false);
       });
-    /* return () => {
-      cleanup
-    } */
   }, []);
 
   return (
-    <CategoriesContext.Provider
+    <OrdersContext.Provider
       value={{
-        categories,
+        orders,
+        setOrders,
         loading,
         error,
       }}
     >
       {props.children}
-    </CategoriesContext.Provider>
+    </OrdersContext.Provider>
   );
 }
 
-export function useCategories() {
-  return useContext(CategoriesContext);
+export function useOrders() {
+  return useContext(OrdersContext);
 }

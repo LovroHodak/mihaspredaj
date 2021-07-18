@@ -1,36 +1,22 @@
-import React, { useContext } from "react";
-import { MyContext } from "../MyContext";
+import React from "react";
 import "./SuccessPage.css";
-import { Image } from "react-bootstrap";
+import { Image, Spinner } from "react-bootstrap";
+
+import { useOrders } from "../hooks/use-orders";
 
 export default function SuccessPage() {
-  const [
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-    nrOfCartItems,
-    setNrOfCartItems,
-    total,
-    setTotal,
-    soldHistory,
-    setSoldHistory,
-    initial,
-    setInitial,
-  ] = useContext(MyContext);
+
+  const { orders, loading, error } = useOrders();
+
+  if (loading) return <Spinner animation="grow" />;
+  if (error) return <code>{error}</code>;
 
   return (
     <div className="successPage">
-      {soldHistory.length > 0 ? (
+      {orders.length > 0 ? (
         <div className="d-flex flex-column justify-content-center align-items-center text-white">
           <h1>
-            Thank you {soldHistory[soldHistory.length - 1].name.toUpperCase()}{" "}
+            Thank you {orders[orders.length - 1].name.toUpperCase()}{" "}
             for your order!
           </h1>
           <Image
