@@ -4,7 +4,7 @@ import "./UserData.css";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import {API_URL} from '../config'
+import { API_URL } from "../config";
 
 export default function UserData() {
   let history = useHistory();
@@ -56,16 +56,15 @@ export default function UserData() {
     setCity(e.target.value);
   };
 
-  
   const payment = () => {
-    let cash = 'Cash - after delivery'
-    let CC = 'Credit Card'
+    let cash = "Cash - after delivery";
+    let CC = "Credit Card";
     if (afterDelivery === true) {
-      return cash
+      return cash;
     } else {
-      return CC
+      return CC;
     }
-  }
+  };
 
   const buyIt = (e) => {
     e.preventDefault();
@@ -115,14 +114,14 @@ export default function UserData() {
 
       history.push("/successPage");
 
-      axios
+      Promise.all([axios
         .patch(`${API_URL}/api/products`, {
           allProducts,
         })
         .then((response) => {
           setAllProducts(response.data);
           console.log("afterDelivery");
-        });
+        }),
 
       axios.post(`${API_URL}/api/newOrder`, newClient).then(() => {
         axios
@@ -135,9 +134,10 @@ export default function UserData() {
           .then(() => {
             console.log("send mail");
           })
-          .catch((error) => console.log('Mail sent but error: ', error));
-          
-      });
+          .catch((error) => console.log("Mail sent but error: ", error));
+      })]).then(() => {
+        console.log('IMPLEMENTED promise.all')
+      })
     } else {
       console.log("withCard");
       history.push("/cardComponent");
