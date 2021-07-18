@@ -9,6 +9,7 @@ import { API_URL } from "../config";
 export default function UserData() {
   let history = useHistory();
 
+  // Context
   const [
     sliderInfo,
     setSliderInfo,
@@ -32,15 +33,15 @@ export default function UserData() {
     setInitial,
   ] = useContext(MyContext);
 
+  // State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-
   const [afterDelivery, setAfterDelivery] = useState(false);
+
+  // Function
   const updateEmail = (e) => {
-    /* if (e.target.value === "") {
-    } */
     setEmail(e.target.value);
   };
 
@@ -56,7 +57,7 @@ export default function UserData() {
     setCity(e.target.value);
   };
 
-  const payment = () => {
+  const paymentMethod = () => {
     let cash = "Cash - after delivery";
     let CC = "Credit Card";
     if (afterDelivery === true) {
@@ -66,55 +67,47 @@ export default function UserData() {
     }
   };
 
-  const buyIt = (e) => {
-    e.preventDefault();
+  let newClient = {
+    name: name,
+    email: email,
+    address: address,
+    city: city,
+    total: total,
+    paymentMethod: paymentMethod(),
+    cart: cart.map((item) => {
+      return {
+        namee: item.name,
+        pricee: item.price,
+        nrOfItemss: item.nrOfItems,
+      };
+    }),
+  };
 
-    let newClient = {
-      name: name,
-      email: email,
-      address: address,
-      city: city,
-      total: total,
-      payment: payment(),
-      cart: cart.map((item) => {
-        return {
-          namee: item.name,
-          pricee: item.price,
-          nrOfItemss: item.nrOfItems,
-        };
-      }),
-    };
+  const payAfterDelivery = () => {
+    // set State
+    setCart([]);
+    setNrOfCartItems(0);
+    setInitial(allProducts);
+    setBS2(
+      allProducts
+        .sort((a, b) => {
+          return b.sold - a.sold;
+        })
+        .slice(3, 5)
+    );
+    setBS3(
+      allProducts
+        .sort((a, b) => {
+          return b.sold - a.sold;
+        })
+        .slice(0, 3)
+    );
 
-    setSoldHistory((prevClients) => [...prevClients, newClient]);
+    history.push("/successPage");
 
-    setEmail("");
-    setName("");
-    setAddress("");
-    setCity("");
-
-    // IF YOU PICK PAY AT DELIVERY
-    if (afterDelivery === true) {
-      setCart([]);
-      setNrOfCartItems(0);
-      setInitial(allProducts);
-      setBS2(
-        allProducts
-          .sort((a, b) => {
-            return b.sold - a.sold;
-          })
-          .slice(3, 5)
-      );
-      setBS3(
-        allProducts
-          .sort((a, b) => {
-            return b.sold - a.sold;
-          })
-          .slice(0, 3)
-      );
-
-      history.push("/successPage");
-
-      Promise.all([axios
+    // update DB
+    Promise.all([
+      axios
         .patch(`${API_URL}/api/products`, {
           allProducts,
         })
@@ -135,9 +128,25 @@ export default function UserData() {
             console.log("send mail");
           })
           .catch((error) => console.log("Mail sent but error: ", error));
-      })]).then(() => {
-        console.log('IMPLEMENTED promise.all')
-      })
+      }),
+    ]).then(() => {
+      console.log("IMPLEMENTED promise.all");
+    });
+  };
+
+  const buyIt = (e) => {
+    e.preventDefault();
+
+    setSoldHistory((prevClients) => [...prevClients, newClient]);
+
+    setEmail("");
+    setName("");
+    setAddress("");
+    setCity("");
+
+    // IF YOU PICK PAY AT DELIVERY
+    if (afterDelivery === true) {
+      payAfterDelivery();
     } else {
       console.log("withCard");
       history.push("/cardComponent");
