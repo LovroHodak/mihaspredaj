@@ -1,24 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Navv.css";
 import { Navbar, Nav, Image, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { MyContext } from "../MyContext";
+
+import { useAddDeleteFromCart } from "../hooks/use-addDeleteFromCart";
 
 export default function Navv() {
-  const [
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-    nrOfCartItems,
-    setNrOfCartItems,
-  ] = useContext(MyContext);
+  const { nrOfCartItems } = useAddDeleteFromCart();
 
   return (
     <Navbar

@@ -1,24 +1,22 @@
-import React, { useContext } from "react";
-import { MyContext } from "../MyContext";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Card, Button, Container } from "react-bootstrap";
+import { Card, Button, Spinner } from "react-bootstrap";
+
+import { useProducts } from "../hooks/use-products";
 
 export default function BestSeller() {
-  const [
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-  ] = useContext(MyContext);
+  const { BestS2, BestS3, loading, error } = useProducts();
+
+  if (loading) return <Spinner animation="grow" />;
+  if (error) return <code>{error}</code>;
+
   return (
     <div className="w-100 p-0">
       <h1 className="text-white text-center font-weight-light mt-3 mb-3 d-none d-md-block">
         Best Sellers
       </h1>
       <div className="p-0 d-md-flex justify-content-between ">
-        {BS3.map((item) => {
+        {BestS3.map((item) => {
           return (
             <Card key={item.id} className="mx-1 my-1">
               <Card.Img
@@ -37,7 +35,7 @@ export default function BestSeller() {
         })}
       </div>
       <div className="p-0 d-md-flex justify-content-between">
-        {BS2.map((item) => {
+        {BestS2.map((item) => {
           return (
             <Card key={item.id} className="mx-1 my-1">
               <Card.Img

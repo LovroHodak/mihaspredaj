@@ -1,35 +1,21 @@
-import React, { useContext, useState } from "react";
-import { MyContext } from "../MyContext";
+import React, {  useState } from "react";
 import "./UserData.css";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 
-export default function UserData() {
-  let history = useHistory();
+import { useOrders } from "../hooks/use-orders";
+import { useProducts } from "../hooks/use-products";
+import { useAddDeleteFromCart } from "../hooks/use-addDeleteFromCart";
 
-  // Context
-  const [
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-    nrOfCartItems,
-    setNrOfCartItems,
-    total,
-    setTotal,
-    soldHistory,
-    setSoldHistory,
-    initial,
-    setInitial,
-  ] = useContext(MyContext);
+export default function UserData() {
+  const { setOrders } = useOrders();
+  const { products, setProducts, setBestS2, setBestS3, setInitialValue } =
+    useProducts();
+  const { setCart, cart, setNrOfCartItems, total } = useAddDeleteFromCart();
+
+  let history = useHistory();
 
   // State
   const [email, setEmail] = useState("");
@@ -71,7 +57,7 @@ export default function UserData() {
     address: address,
     city: city,
     total: total,
-    paymentMethod: paymentMethod(),
+    payment: paymentMethod(),
     cart: cart.map((item) => {
       return {
         namee: item.name,
@@ -85,16 +71,16 @@ export default function UserData() {
     // set State
     setCart([]);
     setNrOfCartItems(0);
-    setInitial(allProducts);
-    setBS2(
-      allProducts
+    setInitialValue(products);
+    setBestS2(
+      products
         .sort((a, b) => {
           return b.sold - a.sold;
         })
         .slice(3, 5)
     );
-    setBS3(
-      allProducts
+    setBestS3(
+      products
         .sort((a, b) => {
           return b.sold - a.sold;
         })
@@ -107,10 +93,10 @@ export default function UserData() {
     Promise.all([
       axios
         .patch(`${API_URL}/api/products`, {
-          allProducts,
+          products,
         })
         .then((response) => {
-          setAllProducts(response.data);
+          setProducts(response.data);
           console.log("afterDelivery");
         }),
 
@@ -135,7 +121,8 @@ export default function UserData() {
   const buyIt = (e) => {
     e.preventDefault();
 
-    setSoldHistory((prevClients) => [...prevClients, newClient]);
+    /* setSoldHistory((prevClients) => [...prevClients, newClient]); */
+    setOrders((prevClients) => [...prevClients, newClient]);
 
     setEmail("");
     setName("");

@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 // MINE
 import "./CheckoutForm.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { MyContext } from "../MyContext";
-import {API_URL} from '../config'
+import { API_URL } from "../config";
+
+import { useOrders } from "../hooks/use-orders";
+import { useProducts } from "../hooks/use-products";
+import { useAddDeleteFromCart } from "../hooks/use-addDeleteFromCart";
 
 export default function CheckoutForm({ items }) {
   const [succeeded, setSucceeded] = useState(false);
@@ -17,27 +20,10 @@ export default function CheckoutForm({ items }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  // MINE
-  const [
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-    nrOfCartItems,
-    setNrOfCartItems,
-    total,
-    setTotal,
-    soldHistory,
-    setSoldHistory,
-    initial,
-    setInitial,
-  ] = useContext(MyContext);
+  const { orders } = useOrders();
+  const { products, setProducts, setBestS3, setBestS2, setInitialValue } =
+    useProducts();
+  const { setCart, setNrOfCartItems } = useAddDeleteFromCart();
 
   let history = useHistory();
 
@@ -99,43 +85,40 @@ export default function CheckoutForm({ items }) {
 
       axios
         .patch(`${API_URL}/api/products`, {
-          allProducts,
+          products,
         })
         .then((response) => {
-          setAllProducts(response.data);
+          setProducts(response.data);
           console.log("Card payment");
         });
 
       axios
-        .post(
-          `${API_URL}/api/newOrder`,
-          soldHistory[soldHistory.length - 1]
-        )
+        .post(`${API_URL}/api/newOrder`, orders[orders.length - 1])
         .then(() => {
           axios
             .post(
               `${API_URL}/api/send-email`,
-              soldHistory[soldHistory.length - 1],
+              orders[orders.length - 1],
 
               { withCredentials: true }
             )
             .then(() => {
               console.log("send mail");
             })
-            .catch((error) => console.log('Mail sent but error: ', error));
+            .catch((error) => console.log("Mail sent but error: ", error));
         });
       setCart([]);
       setNrOfCartItems(0);
-      setInitial(allProducts);
-      setBS2(
-        allProducts
+      setInitialValue(products);
+      setBestS2(
+        products
           .sort((a, b) => {
             return b.sold - a.sold;
           })
           .slice(3, 5)
       );
-      setBS3(
-        allProducts
+      setBestS3(
+        products
           .sort((a, b) => {
             return b.sold - a.sold;
           })

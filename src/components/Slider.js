@@ -7,7 +7,7 @@ export default function Slider() {
 
   if (loading) return <Spinner animation="grow" />;
   if (error) return <code>{error}</code>;
-  
+
   return (
     <div>
       <Carousel className="d-none d-md-block">

@@ -5,7 +5,6 @@ import { Image, Spinner } from "react-bootstrap";
 import { useOrders } from "../hooks/use-orders";
 
 export default function SuccessPage() {
-
   const { orders, loading, error } = useOrders();
 
   if (loading) return <Spinner animation="grow" />;
@@ -16,8 +15,8 @@ export default function SuccessPage() {
       {orders.length > 0 ? (
         <div className="d-flex flex-column justify-content-center align-items-center text-white">
           <h1>
-            Thank you {orders[orders.length - 1].name.toUpperCase()}{" "}
-            for your order!
+            Thank you {orders[orders.length - 1].name.toUpperCase()} for your
+            order!
           </h1>
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrA-Hjwh0PrysnRa-wKM7rY7rlSL4dT45Ivw&usqp=CAU"

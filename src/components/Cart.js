@@ -1,30 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Cart.css";
-import { MyContext } from "../MyContext";
 import { Button, Jumbotron } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { useProducts } from "../hooks/use-products";
+import { useAddDeleteFromCart } from "../hooks/use-addDeleteFromCart";
+
 export default function Cart() {
-  const [
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-    nrOfCartItems,
-    setNrOfCartItems,
-    total,
-    setTotal,
-    soldHistory,
-    setSoldHistory,
-    initial,
-    setInitial,
-  ] = useContext(MyContext);
+  const { products } = useProducts();
+  const { addToCart, deleteFromCart, cart, total } = useAddDeleteFromCart();
 
   return (
     <div className="cart pt-2 pb-1">
@@ -63,7 +47,7 @@ export default function Cart() {
                   {item.nrOfItems} x {item.price} €
                 </h2>
                 <div className="cartItemBtns">
-                  {allProducts.map((product, i) => {
+                  {products.map((product, i) => {
                     if (item._id === product._id && product.stock > 0) {
                       return (
                         <Button

@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Admin.css";
 
-import {  Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { useOrders } from "../hooks/use-orders";
 
 export default function Admin() {
+  const { orders, loading, error } = useOrders();
 
-    const { orders, loading, error } = useOrders();
-
-    if (loading) return <Spinner animation="grow" />;
-    if (error) return <code>{error}</code>;
+  if (loading) return <Spinner animation="grow" />;
+  if (error) return <code>{error}</code>;
 
   return (
     <div className="admin">
