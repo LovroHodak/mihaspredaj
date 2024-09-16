@@ -35,7 +35,7 @@ a:active {
 
 @media (max-width: 975px) {
   .realFoot {
-      flex-direction: column-reverse;
+    flex-direction: column-reverse;
   }
   .footLogo {
     display: none;

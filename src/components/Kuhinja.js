@@ -1,13 +1,12 @@
 import "./KATEGORIJE.css";
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Button } from "react-bootstrap";
-import { MyContext } from "../MyContext";
 import { Link } from "react-router-dom";
 
+import { useProducts } from "../hooks/use-products";
+
 export default function Kuhinja() {
-  const [sliderInfo, setSliderInfo, allProducts, setAllProducts] = useContext(
-    MyContext
-  );
+  const { products } = useProducts();
 
   return (
     <div className="kategorije">
@@ -31,7 +30,7 @@ export default function Kuhinja() {
           flexWrap: "wrap",
         }}
       >
-        {allProducts.map((product, i) => {
+        {products.map((product, i) => {
           if (product.category === "Kuhinja") {
             return (
               <Card key={i} style={{ maxWidth: 300 }} className="mx-1 my-1">

@@ -1,28 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Detail.css";
-import { MyContext } from "../MyContext";
 import { Button, Image } from "react-bootstrap";
 
+import { useProducts } from "../hooks/use-products";
+import { useAddDeleteFromCart } from "../hooks/use-addDeleteFromCart";
+
 export default function Detail({ match }) {
-  const [
-    sliderInfo,
-    setSliderInfo,
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-  ] = useContext(MyContext);
+  const { addToCart } = useAddDeleteFromCart();
 
   let paramsId = match.params.id;
 
+  const { products, setProducts } = useProducts();
+
   const setActive = (fotoId) => {
-    let newActive = allProducts.map((product) => {
+    let newActive = products.map((product) => {
       if (product._id === paramsId) {
         const updateProduct = {
           ...product,
@@ -62,12 +53,12 @@ export default function Detail({ match }) {
       return product;
     });
 
-    setAllProducts(betterActive);
+    setProducts(betterActive);
   };
 
   return (
     <div className="detail">
-      {allProducts.map((product, i) => {
+      {products.map((product, i) => {
         if (product._id === paramsId) {
           return (
             <div key={i}>

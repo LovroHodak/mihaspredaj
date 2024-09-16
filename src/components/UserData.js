@@ -1,46 +1,31 @@
-import React, { useContext, useState } from "react";
-import { MyContext } from "../MyContext";
+import React, {  useState } from "react";
 import "./UserData.css";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import {API_URL} from '../config'
+import { API_URL } from "../config";
+
+import { useOrders } from "../hooks/use-orders";
+import { useProducts } from "../hooks/use-products";
+import { useAddDeleteFromCart } from "../hooks/use-addDeleteFromCart";
 
 export default function UserData() {
+  const { setOrders } = useOrders();
+  const { products, setProducts, setBestS2, setBestS3, setInitialValue } =
+    useProducts();
+  const { setCart, cart, setNrOfCartItems, total } = useAddDeleteFromCart();
+
   let history = useHistory();
 
-  const [
-    sliderInfo,
-    setSliderInfo,
-    allProducts,
-    setAllProducts,
-    BS2,
-    setBS2,
-    BS3,
-    setBS3,
-    addToCart,
-    deleteFromCart,
-    cart,
-    setCart,
-    nrOfCartItems,
-    setNrOfCartItems,
-    total,
-    setTotal,
-    soldHistory,
-    setSoldHistory,
-    initial,
-    setInitial,
-  ] = useContext(MyContext);
-
+  // State
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-
   const [afterDelivery, setAfterDelivery] = useState(false);
+
+  // Function
   const updateEmail = (e) => {
-    /* if (e.target.value === "") {
-    } */
     setEmail(e.target.value);
   };
 
@@ -56,73 +41,64 @@ export default function UserData() {
     setCity(e.target.value);
   };
 
-  
-  const payment = () => {
-    let cash = 'Cash - after delivery'
-    let CC = 'Credit Card'
+  const paymentMethod = () => {
+    let cash = "Cash - after delivery";
+    let CC = "Credit Card";
     if (afterDelivery === true) {
-      return cash
+      return cash;
     } else {
-      return CC
+      return CC;
     }
-  }
+  };
 
-  const buyIt = (e) => {
-    e.preventDefault();
+  let newClient = {
+    name: name,
+    email: email,
+    address: address,
+    city: city,
+    total: total,
+    payment: paymentMethod(),
+    cart: cart.map((item) => {
+      return {
+        namee: item.name,
+        pricee: item.price,
+        nrOfItemss: item.nrOfItems,
+      };
+    }),
+  };
 
-    let newClient = {
-      name: name,
-      email: email,
-      address: address,
-      city: city,
-      total: total,
-      payment: payment(),
-      cart: cart.map((item) => {
-        return {
-          namee: item.name,
-          pricee: item.price,
-          nrOfItemss: item.nrOfItems,
-        };
-      }),
-    };
+  const payAfterDelivery = () => {
+    // set State
+    setCart([]);
+    setNrOfCartItems(0);
+    setInitialValue(products);
+    setBestS2(
+      products
+        .sort((a, b) => {
+          return b.sold - a.sold;
+        })
+        .slice(3, 5)
+    );
+    setBestS3(
+      products
+        .sort((a, b) => {
+          return b.sold - a.sold;
+        })
+        .slice(0, 3)
+    );
 
-    setSoldHistory((prevClients) => [...prevClients, newClient]);
+    history.push("/successPage");
 
-    setEmail("");
-    setName("");
-    setAddress("");
-    setCity("");
-
-    // IF YOU PICK PAY AT DELIVERY
-    if (afterDelivery === true) {
-      setCart([]);
-      setNrOfCartItems(0);
-      setInitial(allProducts);
-      setBS2(
-        allProducts
-          .sort((a, b) => {
-            return b.sold - a.sold;
-          })
-          .slice(3, 5)
-      );
-      setBS3(
-        allProducts
-          .sort((a, b) => {
-            return b.sold - a.sold;
-          })
-          .slice(0, 3)
-      );
-
-      history.push("/successPage");
-
+    // update DB
+    Promise.all([
       axios
         .patch(`${API_URL}/api/products`, {
-          allProducts,
+          products,
         })
         .then((response) => {
-          setAllProducts(response.data);
+          setProducts(response.data);
           console.log("afterDelivery");
-        });
+        }),
 
       axios.post(`${API_URL}/api/newOrder`, newClient).then(() => {
         axios
@@ -135,9 +111,27 @@ export default function UserData() {
           .then(() => {
             console.log("send mail");
           })
-          .catch((error) => console.log('Mail sent but error: ', error));
-          
-      });
+          .catch((error) => console.log("Mail sent but error: ", error));
+      }),
+    ]).then(() => {
+      console.log("IMPLEMENTED promise.all");
+    });
+  };
+
+  const buyIt = (e) => {
+    e.preventDefault();
+
+    /* setSoldHistory((prevClients) => [...prevClients, newClient]); */
+    setOrders((prevClients) => [...prevClients, newClient]);
+
+    setEmail("");
+    setName("");
+    setAddress("");
+    setCity("");
+
+    // IF YOU PICK PAY AT DELIVERY
+    if (afterDelivery === true) {
+      payAfterDelivery();
     } else {
       console.log("withCard");
       history.push("/cardComponent");
